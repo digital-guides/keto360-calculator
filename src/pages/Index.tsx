@@ -15,16 +15,16 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-emerald-500 to-orange-400 p-4">
       <div className="max-w-6xl mx-auto bg-cream rounded-3xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 p-8 text-center text-white relative">
-          <div className="mb-5">
+        <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 p-6 text-center text-white relative">
+          <div className="mb-2">
             <img 
               src={logoImage} 
               alt="Keto360 Logo" 
-              className="h-16 w-auto mx-auto"
+              className="h-14 w-auto mx-auto"
             />
           </div>
-          <h1 className="text-3xl font-bold mb-2 text-shadow">Calculadora Keto</h1>
-          <p className="text-base opacity-90">Tu aliado keto día a día</p>
+          <h1 className="text-3xl font-bold mb-1 text-shadow">Calculadora Keto</h1>
+          <p className="text-base opacity-90 mb-2">Tu aliado keto día a día</p>
           
           {/* Install PWA Button */}
           <button 
