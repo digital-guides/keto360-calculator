@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { MacroCalculator } from '@/components/MacroCalculator';
 import { FoodTracker } from '@/components/FoodTracker';
 import { CustomFoodManager } from '@/components/CustomFoodManager';
+import { DailyProgress } from '@/components/DailyProgress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Calculator, Utensils, Plus, HelpCircle } from 'lucide-react';
+import { Calculator, Utensils, Plus, HelpCircle, TrendingUp } from 'lucide-react';
 
 const Index = () => {
   const [targets, setTargets] = useState({ carbs: 0, protein: 0, fat: 0, calories: 0 });
@@ -101,7 +102,7 @@ const Index = () => {
 
         {/* Tabs Navigation */}
         <Tabs defaultValue="macros" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-emerald-50 p-2 rounded-none">
+          <TabsList className="grid w-full grid-cols-4 bg-emerald-50 p-2 rounded-none">
             <TabsTrigger 
               value="macros" 
               className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
@@ -115,6 +116,13 @@ const Index = () => {
             >
               <Utensils className="w-4 h-4" />
               🍽️ Calcula lo que comes
+            </TabsTrigger>
+            <TabsTrigger 
+              value="progress" 
+              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+            >
+              <TrendingUp className="w-4 h-4" />
+              📈 Mi Progreso
             </TabsTrigger>
             <TabsTrigger 
               value="custom" 
@@ -131,6 +139,10 @@ const Index = () => {
 
           <TabsContent value="tracker" className="p-6">
             <FoodTracker targets={targets} />
+          </TabsContent>
+
+          <TabsContent value="progress" className="p-6">
+            <DailyProgress />
           </TabsContent>
 
           <TabsContent value="custom" className="p-6">

@@ -42,6 +42,20 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
     calculateTotals();
   }, [todayMeals]);
 
+  // Save daily progress for the progress tracker
+  useEffect(() => {
+    if (todayMeals.length > 0 && targets.carbs > 0) {
+      const today = new Date().toISOString().split('T')[0];
+      const dayData = {
+        date: today,
+        items: todayMeals,
+        totals: totals,
+        targets: targets
+      };
+      localStorage.setItem(`ketoDayLog-${today}`, JSON.stringify(dayData));
+    }
+  }, [totals, targets, todayMeals]);
+
   const loadTodayMeals = () => {
     try {
       const today = new Date().toISOString().split('T')[0];
