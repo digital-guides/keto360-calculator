@@ -159,7 +159,7 @@ const Index = () => {
 
         {/* Tabs Navigation */}
         <Tabs defaultValue="macros" className="w-full">
-          <TabsList className="flex flex-col sm:grid sm:grid-cols-4 w-full bg-emerald-50 p-2 rounded-none gap-1 sm:gap-0">
+          <TabsList className="grid grid-cols-1 sm:grid-cols-4 w-full bg-emerald-50 p-2 rounded-none gap-1 h-auto">
             <TabsTrigger 
               value="macros" 
               className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white w-full justify-start sm:justify-center text-sm px-2 py-3"
