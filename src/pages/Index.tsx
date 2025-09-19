@@ -19,8 +19,8 @@ const Index = () => {
             <div className="text-pink-500 font-bold text-lg mb-2">KETO</div>
             <div className="text-pink-500 font-bold text-lg">AMIGABLE</div>
           </div>
-          <h1 className="text-4xl font-bold mb-3 text-shadow">Calculadora Keto</h1>
-          <p className="text-lg opacity-90">Tu compañero digital para una vida cetogénica sin complicaciones</p>
+          <h1 className="text-3xl font-bold mb-2 text-shadow">Calculadora Keto</h1>
+          <p className="text-base opacity-90">Tu aliado keto día a día</p>
           
           {/* Install PWA Button */}
           <button 
