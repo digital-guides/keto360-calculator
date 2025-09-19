@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Search } from 'lucide-react';
+import { X, Search, AlertTriangle, CheckCircle, Target } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface FoodEntry {
   name: string;
@@ -27,6 +28,8 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
   const [selectedMeal, setSelectedMeal] = useState('desayuno');
   const [todayMeals, setTodayMeals] = useState<FoodEntry[]>([]);
   const [totals, setTotals] = useState({ carbs: 0, protein: 0, fat: 0, kcal: 0 });
+  const [lastAlertState, setLastAlertState] = useState({ carbs: '', protein: '', fat: '' });
+  const { toast } = useToast();
 
   // Load today's meals on component mount
   useEffect(() => {
@@ -78,6 +81,83 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
       { carbs: 0, protein: 0, fat: 0, kcal: 0 }
     );
     setTotals(newTotals);
+    
+    // Check for progress alerts
+    checkProgressAlerts(newTotals);
+  };
+
+  const getProgressState = (current: number, target: number) => {
+    if (target === 0) return 'none';
+    const percentage = (current / target) * 100;
+    
+    if (percentage < 70) return 'low';
+    if (percentage < 85) return 'approaching';
+    if (percentage < 100) return 'close';
+    if (percentage <= 110) return 'achieved';
+    if (percentage <= 130) return 'over';
+    return 'danger';
+  };
+
+  const checkProgressAlerts = (newTotals: typeof totals) => {
+    if (targets.carbs === 0) return; // No targets set yet
+    
+    const carbState = getProgressState(newTotals.carbs, targets.carbs);
+    const proteinState = getProgressState(newTotals.protein, targets.protein);
+    const fatState = getProgressState(newTotals.fat, targets.fat);
+
+    // Carbs alerts (most critical for keto)
+    if (carbState !== lastAlertState.carbs) {
+      switch (carbState) {
+        case 'close':
+          toast({
+            title: "🔥 Cerca del límite de carbos",
+            description: `${newTotals.carbs.toFixed(1)}g de ${targets.carbs}g. ¡Ten cuidado!`,
+            variant: "default",
+          });
+          break;
+        case 'achieved':
+          toast({
+            title: "✅ Meta de carbos alcanzada",
+            description: `${newTotals.carbs.toFixed(1)}g de ${targets.carbs}g. ¡Perfecto para cetosis!`,
+            variant: "default",
+          });
+          break;
+        case 'over':
+          toast({
+            title: "⚠️ Te pasaste un poco de carbos",
+            description: `${newTotals.carbs.toFixed(1)}g de ${targets.carbs}g. Aún en rango cetogénico.`,
+            variant: "default",
+          });
+          break;
+        case 'danger':
+          toast({
+            title: "🚨 ¡FUERA DE CETOSIS!",
+            description: `${newTotals.carbs.toFixed(1)}g de ${targets.carbs}g. Demasiados carbohidratos para keto.`,
+            variant: "destructive",
+          });
+          break;
+      }
+    }
+
+    // Protein alerts
+    if (proteinState !== lastAlertState.protein && proteinState === 'achieved') {
+      toast({
+        title: "💪 Meta de proteínas alcanzada",
+        description: `${newTotals.protein.toFixed(1)}g de ${targets.protein}g`,
+        variant: "default",
+      });
+    }
+
+    // Fat alerts
+    if (fatState !== lastAlertState.fat && fatState === 'achieved') {
+      toast({
+        title: "🥑 Meta de grasas alcanzada", 
+        description: `${newTotals.fat.toFixed(1)}g de ${targets.fat}g`,
+        variant: "default",
+      });
+    }
+
+    setLastAlertState({ carbs: carbState, protein: proteinState, fat: fatState });
   };
 
   const handleSearch = (query: string) => {
@@ -123,35 +203,103 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
   };
 
   const getProgressColor = (current: number, target: number) => {
-    const percentage = target > 0 ? (current / target) * 100 : 0;
-    if (percentage >= 100) return 'bg-emerald-500';
-    if (percentage >= 80) return 'bg-yellow-500';
-    return 'bg-blue-500';
+    const state = getProgressState(current, target);
+    switch (state) {
+      case 'danger': return 'bg-red-500';
+      case 'over': return 'bg-orange-500';
+      case 'achieved': return 'bg-emerald-500';
+      case 'close': return 'bg-yellow-500';
+      case 'approaching': return 'bg-blue-500';
+      default: return 'bg-gray-300';
+    }
   };
 
-  const isGoalReached = (current: number, target: number) => {
-    return target > 0 && current >= target * 0.95; // 95% threshold
+  const getAlertComponent = (current: number, target: number, type: 'carbs' | 'protein' | 'fat') => {
+    const state = getProgressState(current, target);
+    const percentage = target > 0 ? ((current / target) * 100).toFixed(0) : '0';
+    
+    const alertConfig = {
+      carbs: { 
+        emoji: '🔥', 
+        name: 'Carbohidratos',
+        dangerMsg: '¡FUERA DE CETOSIS!',
+        overMsg: 'Límite superado',
+        achievedMsg: 'Meta alcanzada - Perfecto para cetosis',
+        closeMsg: 'Cerca del límite - Ten cuidado'
+      },
+      protein: { 
+        emoji: '💪', 
+        name: 'Proteínas',
+        dangerMsg: 'Exceso muy alto',
+        overMsg: 'Por encima del objetivo',
+        achievedMsg: 'Meta alcanzada',
+        closeMsg: 'Cerca de la meta'
+      },
+      fat: { 
+        emoji: '🥑', 
+        name: 'Grasas',
+        dangerMsg: 'Exceso muy alto', 
+        overMsg: 'Por encima del objetivo',
+        achievedMsg: 'Meta alcanzada',
+        closeMsg: 'Cerca de la meta'
+      }
+    };
+
+    const config = alertConfig[type];
+    
+    switch (state) {
+      case 'danger':
+        return (
+          <div className="flex items-center gap-2 bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded-lg">
+            <AlertTriangle className="w-5 h-5" />
+            <div>
+              <div className="font-semibold">{config.emoji} {config.dangerMsg}</div>
+              <div className="text-sm">{config.name}: {current.toFixed(1)}g de {target}g ({percentage}%)</div>
+            </div>
+          </div>
+        );
+      case 'over':
+        return (
+          <div className="flex items-center gap-2 bg-orange-100 border border-orange-400 text-orange-800 px-4 py-3 rounded-lg">
+            <AlertTriangle className="w-5 h-5" />
+            <div>
+              <div className="font-semibold">{config.emoji} {config.overMsg}</div>
+              <div className="text-sm">{config.name}: {current.toFixed(1)}g de {target}g ({percentage}%)</div>
+            </div>
+          </div>
+        );
+      case 'achieved':
+        return (
+          <div className="flex items-center gap-2 bg-emerald-100 border border-emerald-400 text-emerald-800 px-4 py-3 rounded-lg">
+            <CheckCircle className="w-5 h-5" />
+            <div>
+              <div className="font-semibold">{config.emoji} {config.achievedMsg}</div>
+              <div className="text-sm">{config.name}: {current.toFixed(1)}g de {target}g ({percentage}%)</div>
+            </div>
+          </div>
+        );
+      case 'close':
+        return (
+          <div className="flex items-center gap-2 bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded-lg">
+            <Target className="w-5 h-5" />
+            <div>
+              <div className="font-semibold">{config.emoji} {config.closeMsg}</div>
+              <div className="text-sm">{config.name}: {current.toFixed(1)}g de {target}g ({percentage}%)</div>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="space-y-6">
-      {/* Progress Alerts */}
-      <div className="space-y-2">
-        {isGoalReached(totals.carbs, targets.carbs) && (
-          <div className="bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-2 rounded-lg">
-            🎉 ¡Meta de carbohidratos alcanzada!
-          </div>
-        )}
-        {isGoalReached(totals.protein, targets.protein) && (
-          <div className="bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-2 rounded-lg">
-            💪 ¡Meta de proteínas alcanzada!
-          </div>
-        )}
-        {isGoalReached(totals.fat, targets.fat) && (
-          <div className="bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-2 rounded-lg">
-            🥑 ¡Meta de grasas alcanzada!
-          </div>
-        )}
+      {/* Enhanced Progress Alerts */}
+      <div className="space-y-3">
+        {targets.carbs > 0 && getAlertComponent(totals.carbs, targets.carbs, 'carbs')}
+        {targets.protein > 0 && getAlertComponent(totals.protein, targets.protein, 'protein')}  
+        {targets.fat > 0 && getAlertComponent(totals.fat, targets.fat, 'fat')}
       </div>
 
       {/* Progress Bars */}
