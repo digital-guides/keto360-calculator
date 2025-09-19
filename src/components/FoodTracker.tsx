@@ -167,6 +167,7 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
             </div>
             <Progress 
               value={targets.carbs > 0 ? Math.min((totals.carbs / targets.carbs) * 100, 100) : 0}
+              variant="carbs"
               className="h-2"
             />
           </div>
@@ -178,6 +179,7 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
             </div>
             <Progress 
               value={targets.protein > 0 ? Math.min((totals.protein / targets.protein) * 100, 100) : 0}
+              variant="protein"
               className="h-2"
             />
           </div>
@@ -189,6 +191,7 @@ export const FoodTracker = ({ targets }: FoodTrackerProps) => {
             </div>
             <Progress 
               value={targets.fat > 0 ? Math.min((totals.fat / targets.fat) * 100, 100) : 0}
+              variant="fat"  
               className="h-2"
             />
           </div>

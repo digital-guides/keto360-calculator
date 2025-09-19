@@ -20,6 +20,7 @@ export const MacroCalculator = ({ onTargetsCalculated }: MacroCalculatorProps) =
   });
   
   const [results, setResults] = useState<{ carbs: number; protein: number; fat: number; calories: number } | null>(null);
+  const [showResults, setShowResults] = useState(false);
 
   // Load saved data on component mount
   useEffect(() => {
@@ -30,6 +31,18 @@ export const MacroCalculator = ({ onTargetsCalculated }: MacroCalculatorProps) =
         setFormData(prev => ({ ...prev, ...parsed }));
       } catch (e) {
         console.error('Error loading saved inputs:', e);
+      }
+    }
+
+    // Load saved results
+    const savedTargets = localStorage.getItem('ketoTargets');
+    if (savedTargets) {
+      try {
+        const parsed = JSON.parse(savedTargets);
+        setResults(parsed);
+        setShowResults(true);
+      } catch (e) {
+        console.error('Error loading saved targets:', e);
       }
     }
   }, []);
@@ -70,6 +83,7 @@ export const MacroCalculator = ({ onTargetsCalculated }: MacroCalculatorProps) =
 
     const targets = { carbs, protein, fat, calories };
     setResults(targets);
+    setShowResults(true);
     onTargetsCalculated(targets);
 
     // Save targets
@@ -173,7 +187,7 @@ export const MacroCalculator = ({ onTargetsCalculated }: MacroCalculatorProps) =
         </CardContent>
       </Card>
 
-      {results && (
+      {showResults && results && (
         <Card className="bg-emerald-50 border-emerald-200">
           <CardHeader>
             <CardTitle className="text-emerald-700">Tus Macros Cetogénicos Diarios</CardTitle>
@@ -181,25 +195,29 @@ export const MacroCalculator = ({ onTargetsCalculated }: MacroCalculatorProps) =
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div className="p-4 bg-white rounded-lg">
+                <div className="text-3xl mb-2">🧮</div>
                 <div className="text-2xl font-bold text-gray-800">{results.calories}</div>
                 <div className="text-sm text-gray-600">Calorías</div>
                 <div className="text-xs text-gray-500">kcal</div>
               </div>
               
               <div className="p-4 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{results.carbs}</div>
+                <div className="text-3xl mb-2">🔥</div>
+                <div className="text-2xl font-bold" style={{color: 'hsl(220 91% 60%)'}}>{results.carbs}</div>
                 <div className="text-sm text-gray-600">Carbohidratos</div>
                 <div className="text-xs text-gray-500">g (5%)</div>
               </div>
               
               <div className="p-4 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-orange-600">{results.protein}</div>
+                <div className="text-3xl mb-2">🥩</div>
+                <div className="text-2xl font-bold" style={{color: 'hsl(28 84% 60%)'}}>{results.protein}</div>
                 <div className="text-sm text-gray-600">Proteínas</div>
                 <div className="text-xs text-gray-500">g (25%)</div>
               </div>
               
               <div className="p-4 bg-white rounded-lg">
-                <div className="text-2xl font-bold text-emerald-600">{results.fat}</div>
+                <div className="text-3xl mb-2">🥑</div>
+                <div className="text-2xl font-bold" style={{color: 'hsl(142 71% 45%)'}}>{results.fat}</div>
                 <div className="text-sm text-gray-600">Grasas</div>
                 <div className="text-xs text-gray-500">g (70%)</div>
               </div>
