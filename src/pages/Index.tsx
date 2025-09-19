@@ -45,55 +45,112 @@ const Index = () => {
               <div className="space-y-6 p-6">
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-emerald-600 flex items-center gap-2">
-                    🧮 Paso 1: Calcula tus macros
+                    🧮 Paso 1: Calcula tus macros keto
                   </h3>
                   <p className="text-gray-700">
-                    Ingresa tus datos personales (peso, altura, edad, género, nivel de actividad y objetivo) 
-                    para calcular tus macros cetogénicos diarios. La app usará la fórmula Mifflin-St Jeor 
-                    para calcular tu metabolismo basal y ajustará las calorías según tu objetivo.
+                    Comienza ingresando tus datos personales: peso, altura, edad, género, nivel de actividad física y tu objetivo (perder peso, mantener o ganar masa muscular). 
+                  </p>
+                  <p className="text-gray-700">
+                    La app calculará automáticamente tus macronutrientes cetogénicos utilizando la fórmula científica Mifflin-St Jeor para determinar tu metabolismo basal, y luego ajustará las calorías según tu objetivo específico.
                   </p>
                   <div className="bg-emerald-50 p-4 rounded-lg">
-                    <p className="text-sm text-emerald-800">
-                      <strong>Distribución Keto:</strong> 5% Carbohidratos, 25% Proteínas, 70% Grasas
+                    <p className="text-sm text-emerald-800 mb-2">
+                      <strong>📊 Distribución Cetogénica Estándar:</strong>
                     </p>
+                    <ul className="text-sm text-emerald-700 space-y-1">
+                      <li>• <strong>Carbohidratos:</strong> 5% (20-25g máximo para cetosis)</li>
+                      <li>• <strong>Proteínas:</strong> 25% (masa muscular y saciedad)</li>
+                      <li>• <strong>Grasas:</strong> 70% (fuente principal de energía)</li>
+                    </ul>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-emerald-600 flex items-center gap-2">
-                    🍽️ Paso 2: Registra tus comidas
+                    🍽️ Paso 2: Registra y monitorea tus comidas
                   </h3>
                   <p className="text-gray-700">
-                    Busca alimentos en nuestra base de datos de más de 500 alimentos keto-amigables. 
-                    Simplemente escribe el nombre del alimento, ajusta la cantidad en gramos y 
-                    selecciona la comida (desayuno, almuerzo, cena o snack).
+                    Utiliza nuestra extensa base de datos con más de 500 alimentos keto-amigables. Simplemente:
+                  </p>
+                  <ol className="list-decimal list-inside text-gray-600 space-y-2 ml-4">
+                    <li>Busca el alimento escribiendo su nombre</li>
+                    <li>Ajusta la cantidad en gramos usando el control deslizante</li>
+                    <li>Selecciona el tipo de comida (desayuno, almuerzo, cena o snack)</li>
+                    <li>Observa cómo se actualizan automáticamente tus macros</li>
+                  </ol>
+                  
+                  <div className="bg-yellow-50 p-4 rounded-lg">
+                    <h4 className="font-semibold text-yellow-800 mb-2">🚨 Sistema de Alertas Inteligente:</h4>
+                    <ul className="list-disc list-inside text-yellow-700 space-y-1 text-sm">
+                      <li><strong>Alertas Progresivas:</strong> Te avisamos cuando te acercas a tus límites</li>
+                      <li><strong>Zona de Peligro:</strong> Notificación especial si superas los carbohidratos (&gt;25g)</li>
+                      <li><strong>Celebración de Logros:</strong> Felicitaciones cuando alcances tus metas perfectamente</li>
+                      <li><strong>Indicadores Visuales:</strong> Colores y emojis que cambian según tu progreso</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-emerald-600 flex items-center gap-2">
+                    📈 Paso 3: Sigue tu progreso diario
+                  </h3>
+                  <p className="text-gray-700">
+                    La pestaña "Mi Progreso" te muestra un calendario visual de los últimos 30 días con:
                   </p>
                   <ul className="list-disc list-inside text-gray-600 space-y-1 ml-4">
-                    <li>Las barras de progreso te muestran tu avance diario</li>
-                    <li>Los colores coinciden con tus macros calculados</li>
-                    <li>Recibirás notificaciones cuando alcances tus metas</li>
+                    <li><strong>🎯 Días Perfectos:</strong> Cuando cumples todos tus macros idealmente</li>
+                    <li><strong>😊 Días Buenos:</strong> Cuando estás cerca de tus objetivos</li>
+                    <li><strong>😐 Días Regulares:</strong> Cuando hay margen de mejora</li>
+                    <li><strong>😞 Días Difíciles:</strong> Cuando te alejas significativamente</li>
+                    <li><strong>🔥 Racha Actual:</strong> Días consecutivos manteniendo el buen rumbo</li>
+                    <li><strong>📊 Estadísticas:</strong> Porcentaje de éxito y días perfectos del mes</li>
                   </ul>
                 </div>
 
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-emerald-600 flex items-center gap-2">
-                    🥑 Paso 3: Agrega alimentos personalizados
+                    🥑 Paso 4: Personaliza tu base de datos
                   </h3>
                   <p className="text-gray-700">
-                    ¿No encuentras un alimento? Crea tus propios alimentos personalizados 
-                    con sus valores nutricionales. Estos se guardarán y estarán disponibles 
-                    para futuras búsquedas.
+                    ¿No encuentras un alimento específico? Crea alimentos personalizados con valores nutricionales exactos. Estos se integran completamente en tu base de datos personal para futuras búsquedas.
                   </p>
+                  <div className="bg-purple-50 p-4 rounded-lg">
+                    <p className="text-sm text-purple-800">
+                      <strong>💡 Tip Pro:</strong> Agrega tus preparaciones caseras, marcas locales o recetas favoritas con sus macros calculados.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">💡 Consejos:</h4>
-                  <ul className="list-disc list-inside text-blue-700 space-y-1 text-sm">
-                    <li>Tus datos se guardan automáticamente en tu dispositivo</li>
-                    <li>Puedes instalar la app en tu teléfono para usarla sin conexión</li>
-                    <li>Limpia el día completo si necesitas empezar de nuevo</li>
-                    <li>Los emoticons en los macros te ayudan a identificar cada nutriente</li>
-                  </ul>
+                <div className="bg-blue-50 p-6 rounded-lg">
+                  <h4 className="font-semibold text-blue-800 mb-3">🎯 Estrategias para el Éxito Cetogénico:</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <h5 className="font-medium text-blue-700 mb-2">📱 Funcionalidades:</h5>
+                      <ul className="list-disc list-inside text-blue-600 space-y-1 text-sm">
+                        <li>Datos guardados automáticamente</li>
+                        <li>Funciona sin conexión a internet</li>
+                        <li>Instálala como PWA en tu móvil</li>
+                        <li>Limpieza rápida para empezar de nuevo</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium text-blue-700 mb-2">🧠 Consejos Keto:</h5>
+                      <ul className="list-disc list-inside text-blue-600 space-y-1 text-sm">
+                        <li>Mantén los carbohidratos bajo 25g</li>
+                        <li>Prioriza grasas saludables</li>
+                        <li>No temas a las grasas naturales</li>
+                        <li>Hidrátate abundantemente</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-emerald-50 to-orange-50 p-4 rounded-lg border-l-4 border-emerald-500">
+                  <h4 className="font-bold text-emerald-800 mb-2">🏆 ¡Tu Éxito Cetogénico Te Espera!</h4>
+                  <p className="text-emerald-700 text-sm">
+                    Cada día es una nueva oportunidad para acercarte a tus objetivos. Usa las alertas como guía, 
+                    celebra tus logros en el calendario de progreso, y recuerda: la consistencia es más importante que la perfección.
+                  </p>
                 </div>
               </div>
             </DialogContent>
@@ -102,34 +159,34 @@ const Index = () => {
 
         {/* Tabs Navigation */}
         <Tabs defaultValue="macros" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-emerald-50 p-2 rounded-none">
+          <TabsList className="flex flex-col sm:grid sm:grid-cols-4 w-full bg-emerald-50 p-2 rounded-none gap-1 sm:gap-0">
             <TabsTrigger 
               value="macros" 
-              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white w-full justify-start sm:justify-center text-sm px-2 py-3"
             >
               <Calculator className="w-4 h-4" />
-              🧮 Calcula tus macros
+              🧮 Tus macros keto
             </TabsTrigger>
             <TabsTrigger 
               value="tracker" 
-              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white w-full justify-start sm:justify-center text-sm px-2 py-3"
             >
               <Utensils className="w-4 h-4" />
-              🍽️ Calcula lo que comes
-            </TabsTrigger>
-            <TabsTrigger 
-              value="progress" 
-              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
-            >
-              <TrendingUp className="w-4 h-4" />
-              📈 Mi Progreso
+              🍽️ Tus macros de hoy
             </TabsTrigger>
             <TabsTrigger 
               value="custom" 
-              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white w-full justify-start sm:justify-center text-sm px-2 py-3"
             >
               <Plus className="w-4 h-4" />
-              🥑 Agrega alimentos personalizados
+              🥑 Agregar alimentos
+            </TabsTrigger>
+            <TabsTrigger 
+              value="progress" 
+              className="flex items-center gap-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white w-full justify-start sm:justify-center text-sm px-2 py-3"
+            >
+              <TrendingUp className="w-4 h-4" />
+              📈 Mi progreso
             </TabsTrigger>
           </TabsList>
 
