@@ -6,6 +6,7 @@ import { DailyProgress } from '@/components/DailyProgress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Calculator, Utensils, Plus, HelpCircle, TrendingUp } from 'lucide-react';
+import logoImage from '@/assets/keto360-logo.png';
 
 const Index = () => {
   const [targets, setTargets] = useState({ carbs: 0, protein: 0, fat: 0, calories: 0 });
@@ -16,8 +17,11 @@ const Index = () => {
         {/* Header */}
         <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 p-8 text-center text-white relative">
           <div className="mb-5">
-            <div className="text-pink-500 font-bold text-lg mb-2">KETO</div>
-            <div className="text-pink-500 font-bold text-lg">AMIGABLE</div>
+            <img 
+              src={logoImage} 
+              alt="Keto360 Logo" 
+              className="h-16 w-auto mx-auto"
+            />
           </div>
           <h1 className="text-3xl font-bold mb-2 text-shadow">Calculadora Keto</h1>
           <p className="text-base opacity-90">Tu aliado keto día a día</p>
